@@ -1,0 +1,40 @@
+baseBet = 0.00000999;
+betHigh = false;
+nextBet = baseBet;
+
+var initBet = baseBet;
+var initPay = 3;                            //this is base payout target.
+var betIncrease = 0.00000333;       // this is a flat amount added to the base bet on each loss, it is not a percentage value.
+var payIncrease = 0.33;           //this is a flat increase, added to the payout multiplier, it is not a percentage value.
+
+var currentBet = initBet;
+var currentPayout = initPay;
+
+
+chance = getChance(33);
+
+
+function dobet() {
+    if (win) {
+        currentBet = baseBet;
+        currentPayout = initPay;
+    } else {
+        currentBet += betIncrease;
+        currentPayout += payIncrease;
+        
+    }
+    nextBet = currentBet;
+    chance = getChance(currentPayout);
+   
+}
+
+function getChance(multiplier){
+    return 100 / multiplier;
+}
+
+function round(number, decimals){
+    var dec = decimals - 1;
+    var dec2 = 10 / (10 * dec);
+    var output = number - ((number * 100) % dec2) / 100;
+    return output;
+}
